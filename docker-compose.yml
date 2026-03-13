@@ -1,0 +1,23 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: numpytorch-backend
+    ports:
+      - "8084:8080"
+    volumes:
+      - ./backend:/app
+    environment:
+      - PYTHONPATH=/app
+    command: >
+      sh -c "
+        echo '=== 运行单元测试 ===' &&
+        python -m pytest tests/ -v &&
+        echo '' &&
+        echo '=== 运行交互式演示 ===' &&
+        python demo.py &&
+        echo '' &&
+        echo '=== 所有演示运行完成 ==='
+      "
+    restart: "no"
