@@ -144,7 +144,7 @@ class Tensor:
                     if parent.requires_grad:
                         if parent.grad is None:
                             parent.grad = np.zeros_like(parent.data)
-                        parent.grad = parent_grad  # 错误：应该是 parent.grad + parent_grad
+                        parent.grad += parent_grad  # 正确：梯度累加
     
     def zero_grad(self):
         """清零梯度"""
